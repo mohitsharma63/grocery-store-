@@ -42,6 +42,19 @@ export const cartItems = pgTable("cart_items", {
   sessionId: text("session_id").notNull(),
 });
 
+export const heroSlides = pgTable("hero_slides", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  title: text("title").notNull(),
+  subtitle: text("subtitle"),
+  description: text("description"),
+  image: text("image").notNull(),
+  buttonText: text("button_text"),
+  buttonLink: text("button_link"),
+  badge: text("badge"),
+  order: integer("order").notNull().default(0),
+  isActive: boolean("is_active").default(true).notNull(),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
@@ -59,6 +72,10 @@ export const insertCartItemSchema = createInsertSchema(cartItems).omit({
   id: true,
 });
 
+export const insertHeroSlideSchema = createInsertSchema(heroSlides).omit({
+  id: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 
@@ -70,3 +87,6 @@ export type Product = typeof products.$inferSelect;
 
 export type InsertCartItem = z.infer<typeof insertCartItemSchema>;
 export type CartItem = typeof cartItems.$inferSelect;
+
+export type InsertHeroSlide = z.infer<typeof insertHeroSlideSchema>;
+export type HeroSlide = typeof heroSlides.$inferSelect;

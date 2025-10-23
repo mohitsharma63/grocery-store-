@@ -1,4 +1,4 @@
-import { Hero } from '@/components/Hero';
+import Hero  from '@/components/Hero';
 import { FeatureHighlights } from '@/components/FeatureHighlights';
 import { PromotionalCards } from '@/components/PromotionalCards';
 import { ProductGrid } from '@/components/ProductGrid';

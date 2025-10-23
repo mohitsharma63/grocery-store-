@@ -3,6 +3,32 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Hero Slides routes
+  app.get("/api/hero-slides", async (req, res) => {
+    const slides = await storage.getActiveHeroSlides();
+    res.json(slides);
+  });
+
+  app.get("/api/admin/hero-slides", async (req, res) => {
+    const slides = await storage.getAllHeroSlides();
+    res.json(slides);
+  });
+
+  app.post("/api/admin/hero-slides", async (req, res) => {
+    const slide = await storage.createHeroSlide(req.body);
+    res.json(slide);
+  });
+
+  app.put("/api/admin/hero-slides/:id", async (req, res) => {
+    const slide = await storage.updateHeroSlide(req.params.id, req.body);
+    res.json(slide);
+  });
+
+  app.delete("/api/admin/hero-slides/:id", async (req, res) => {
+    await storage.deleteHeroSlide(req.params.id);
+    res.json({ success: true });
+  });
+
   app.get("/api/products", async (_req, res) => {
     try {
       const products = await storage.getAllProducts();
@@ -91,6 +117,68 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ success: true });
     } catch (error) {
       res.status(500).json({ error: "Failed to clear cart" });
+    }
+  });
+
+  // Product Management Routes
+  app.post("/api/products", async (req, res) => {
+    try {
+      const product = await storage.createProduct(req.body);
+      res.json(product);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to create product" });
+    }
+  });
+
+  app.patch("/api/products/:id", async (req, res) => {
+    try {
+      const product = await storage.updateProduct(req.params.id, req.body);
+      if (!product) {
+        return res.status(404).json({ error: "Product not found" });
+      }
+      res.json(product);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update product" });
+    }
+  });
+
+  app.delete("/api/products/:id", async (req, res) => {
+    try {
+      await storage.deleteProduct(req.params.id);
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to delete product" });
+    }
+  });
+
+  // Category Management Routes
+  app.post("/api/categories", async (req, res) => {
+    try {
+      const category = await storage.createCategory(req.body);
+      res.json(category);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to create category" });
+    }
+  });
+
+  app.patch("/api/categories/:id", async (req, res) => {
+    try {
+      const category = await storage.updateCategory(req.params.id, req.body);
+      if (!category) {
+        return res.status(404).json({ error: "Category not found" });
+      }
+      res.json(category);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update category" });
+    }
+  });
+
+  app.delete("/api/categories/:id", async (req, res) => {
+    try {
+      await storage.deleteCategory(req.params.id);
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to delete category" });
     }
   });
 

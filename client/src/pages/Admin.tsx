@@ -19,12 +19,14 @@ import AdminOrders from "./admin/Orders";
 import AdminUsers from "./admin/Users";
 import AdminSettings from "./admin/Settings";
 import AdminAnalytics from "./admin/Analytics";
+import AdminHeroSlides from "./admin/HeroSlides";
 
 export default function Admin() {
   const [location] = useLocation();
 
   const menuItems = [
     { title: "Dashboard", icon: LayoutDashboard, path: "/admin" },
+    { title: "Hero Slides", icon: LayoutDashboard, path: "/admin/hero-slides" },
     { title: "Products", icon: Package, path: "/admin/products" },
     { title: "Categories", icon: FolderTree, path: "/admin/categories" },
     { title: "Orders", icon: ShoppingCart, path: "/admin/orders" },
@@ -147,6 +149,7 @@ export default function Admin() {
           <div className="flex-1 p-6 md:p-8 lg:p-10">
             <Switch>
               <Route path="/admin" component={AdminDashboard} />
+              <Route path="/admin/hero-slides" component={AdminHeroSlides} />
               <Route path="/admin/products" component={AdminProducts} />
               <Route path="/admin/categories" component={AdminCategories} />
               <Route path="/admin/orders" component={AdminOrders} />
