@@ -20,6 +20,7 @@ import AdminUsers from "./admin/Users";
 import AdminSettings from "./admin/Settings";
 import AdminAnalytics from "./admin/Analytics";
 import AdminHeroSlides from "./admin/HeroSlides";
+import AdminSubcategories from "./admin/Subcategories";
 
 export default function Admin() {
   const [location] = useLocation();
@@ -29,6 +30,7 @@ export default function Admin() {
     { title: "Hero Slides", icon: LayoutDashboard, path: "/admin/hero-slides" },
     { title: "Products", icon: Package, path: "/admin/products" },
     { title: "Categories", icon: FolderTree, path: "/admin/categories" },
+    { title: "Subcategories", icon: FolderTree, path: "/admin/subcategories" },
     { title: "Orders", icon: ShoppingCart, path: "/admin/orders" },
     { title: "Users", icon: Users, path: "/admin/users" },
     { title: "Analytics", icon: BarChart3, path: "/admin/analytics" },
@@ -152,6 +154,7 @@ export default function Admin() {
               <Route path="/admin/hero-slides" component={AdminHeroSlides} />
               <Route path="/admin/products" component={AdminProducts} />
               <Route path="/admin/categories" component={AdminCategories} />
+              <Route path="/admin/subcategories" component={AdminSubcategories} />
               <Route path="/admin/orders" component={AdminOrders} />
               <Route path="/admin/users" component={AdminUsers} />
               <Route path="/admin/analytics" component={AdminAnalytics} />

@@ -7,6 +7,14 @@ CREATE TABLE IF NOT EXISTS "categories" (
 	"icon" text
 );
 
+CREATE TABLE IF NOT EXISTS "subcategories" (
+  "id" varchar PRIMARY KEY DEFAULT gen_random_uuid(),
+  "name" text NOT NULL,
+  "slug" text NOT NULL UNIQUE,
+  "category_id" varchar NOT NULL,
+  FOREIGN KEY ("category_id") REFERENCES "categories"("id") ON DELETE CASCADE
+);
+
 -- Create products table
 CREATE TABLE IF NOT EXISTS "products" (
 	"id" varchar PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -27,7 +35,15 @@ CREATE TABLE IF NOT EXISTS "products" (
 	"new_arrival" boolean DEFAULT false NOT NULL
 );
 
--- Create cart_items table
+-- C
+CREATE TABLE IF NOT EXISTS "subcategories" (
+  "id" varchar PRIMARY KEY DEFAULT gen_random_uuid(),
+  "name" text NOT NULL,
+  "slug" text NOT NULL UNIQUE,
+  "category_id" varchar NOT NULL,
+  FOREIGN KEY ("category_id") REFERENCES "categories"("id") ON DELETE CASCADE
+);
+reate cart_items table
 CREATE TABLE IF NOT EXISTS "cart_items" (
 	"id" varchar PRIMARY KEY DEFAULT gen_random_uuid(),
 	"product_id" varchar NOT NULL REFERENCES "products"("id"),
@@ -56,3 +72,7 @@ CREATE INDEX IF NOT EXISTS "idx_cart_items_session" ON "cart_items"("session_id"
 CREATE INDEX IF NOT EXISTS "idx_cart_items_product" ON "cart_items"("product_id");
 CREATE INDEX IF NOT EXISTS "idx_hero_slides_order" ON "hero_slides"("order");
 CREATE INDEX IF NOT EXISTS "idx_hero_slides_active" ON "hero_slides"("is_active");
+ALTER TABLE "categories" ADD COLUMN "is_active" boolean DEFAULT true NOT NULL;
+
+-- Add is_active column to subcategories
+ALTER TABLE "subcategories" ADD COLUMN "is_active" boolean DEFAULT true NOT NULL;

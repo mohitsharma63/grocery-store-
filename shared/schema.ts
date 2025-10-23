@@ -14,6 +14,15 @@ export const categories = pgTable("categories", {
   name: text("name").notNull(),
   slug: text("slug").notNull().unique(),
   icon: text("icon"),
+  isActive: boolean("is_active").default(true).notNull(),
+});
+
+export const subcategories = pgTable("subcategories", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  slug: text("slug").notNull().unique(),
+  categoryId: varchar("category_id").references(() => categories.id).notNull(),
+  isActive: boolean("is_active").default(true).notNull(),
 });
 
 export const products = pgTable("products", {
@@ -64,6 +73,10 @@ export const insertCategorySchema = createInsertSchema(categories).omit({
   id: true,
 });
 
+export const insertSubcategorySchema = createInsertSchema(subcategories).omit({
+  id: true,
+});
+
 export const insertProductSchema = createInsertSchema(products).omit({
   id: true,
 });
@@ -81,6 +94,9 @@ export type User = typeof users.$inferSelect;
 
 export type InsertCategory = z.infer<typeof insertCategorySchema>;
 export type Category = typeof categories.$inferSelect;
+
+export type InsertSubcategory = z.infer<typeof insertSubcategorySchema>;
+export type Subcategory = typeof subcategories.$inferSelect;
 
 export type InsertProduct = z.infer<typeof insertProductSchema>;
 export type Product = typeof products.$inferSelect;
