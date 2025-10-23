@@ -1,4 +1,4 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -32,17 +32,20 @@ function Router() {
 }
 
 function App() {
+  const [location] = useLocation();
+  const isAdminRoute = location.startsWith('/admin');
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <CartProvider>
           <div className="min-h-screen flex flex-col">
-            <Header />
+            {!isAdminRoute && <Header />}
             <main className="flex-1">
               <Router />
             </main>
-            <Cart />
-            <footer className="bg-muted mt-16">
+            {!isAdminRoute && <Cart />}
+            {!isAdminRoute && <footer className="bg-muted mt-16">
               <div className="container mx-auto px-4 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                   <div>
@@ -80,7 +83,7 @@ function App() {
                   <p>&copy; 2024 Grogin. All rights reserved.</p>
                 </div>
               </div>
-            </footer>
+            </footer>}
           </div>
           <Toaster />
         </CartProvider>
