@@ -342,7 +342,7 @@ export function Header() {
 
         <nav className="hidden md:block border-t">
           <div className="container mx-auto px-4">
-            <ul className="flex items-center gap-6 h-11 text-sm font-medium">
+            <ul className="flex items-center  justify-evenly  gap-6 h-11 text-sm font-medium">
               <li>
                 <Link href="/" className="hover:text-primary transition-colors">
                   Home
