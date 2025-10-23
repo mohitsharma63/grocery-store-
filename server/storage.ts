@@ -2,7 +2,8 @@ import { type User, type InsertUser, type Product, type InsertProduct, type Cate
 import { drizzle } from "drizzle-orm/neon-serverless";
 import { Pool } from "@neondatabase/serverless";
 import { eq } from "drizzle-orm";
-
+import dotenv from "dotenv";
+dotenv.config();
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const db = drizzle(pool);
 
