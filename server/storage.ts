@@ -26,7 +26,7 @@ export interface IStorage {
   deleteCategory(id: string): Promise<void>;
 
   getCartItems(sessionId: string): Promise<CartItem[]>;
-  addToCart(item: InsertCartItem): Promise<CartItem>;
+  // addToCart(item: InsertCartItem): Promise<CartItem>;
   updateCartItem(id: string, quantity: number): Promise<CartItem | undefined>;
   removeFromCart(id: string): Promise<void>;
   clearCart(sessionId: string): Promise<void>;
@@ -110,22 +110,22 @@ export class DatabaseStorage implements IStorage {
     return await db.select().from(cartItems).where(eq(cartItems.sessionId, sessionId));
   }
 
-  async addToCart(item: InsertCartItem): Promise<CartItem> {
-    const existing = await db.select().from(cartItems)
-      .where(eq(cartItems.productId, item.productId))
-      .where(eq(cartItems.sessionId, item.sessionId));
+  // async addToCart(item: InsertCartItem): Promise<CartItem> {
+  //   const existing = await db.select().from(cartItems)
+  //     .where(eq(cartItems.productId, item.productId))
+  //     // .where(eq(cartItems.sessionId, item.sessionId));
 
-    if (existing.length > 0) {
-      const updated = await db.update(cartItems)
-        .set({ quantity: existing[0].quantity + (item.quantity || 1) })
-        .where(eq(cartItems.id, existing[0].id))
-        .returning();
-      return updated[0];
-    }
+  //   if (existing.length > 0) {
+  //     const updated = await db.update(cartItems)
+  //       .set({ quantity: existing[0].quantity + (item.quantity || 1) })
+  //       .where(eq(cartItems.id, existing[0].id))
+  //       .returning();
+  //     return updated[0];
+  //   }
 
-    const result = await db.insert(cartItems).values(item).returning();
-    return result[0];
-  }
+  //   const result = await db.insert(cartItems).values(item).returning();
+  //   return result[0];
+  // }
 
   async updateCartItem(id: string, quantity: number): Promise<CartItem | undefined> {
     const result = await db.update(cartItems).set({ quantity }).where(eq(cartItems.id, id)).returning();
